@@ -1,0 +1,11 @@
+{% extends "home/layout.html" %}
+
+{% block body %}
+    <h1>Signup</h1><br>
+
+    <form action="{% url 'home:signup_page' %}" method = "post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+{% endblock %}
