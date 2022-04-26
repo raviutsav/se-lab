@@ -96,7 +96,8 @@ def profile_page(request, email):
         "email" : email_i,
         "organisation" : Users.objects.filter(email = email_i).first().organisation,
         "account_type" : Users.objects.filter(email = email_i).first().account_type,
-        "con_form" : conferenceForm()
+        "con_form" : conferenceForm(),
+        "cons" : conference.objects.all()
     })
 
 def conference_page(request, email):
@@ -112,10 +113,12 @@ def conference_page(request, email):
             end_date_i = form.cleaned_data["end_date"]
 
             conference.objects.create(con_name = conference_name_i, host_organisation = host_name_i, start_date = start_date_i, end_date = end_date_i)
+            email_i = "NULL"
     
     
     return render(request, "home/conference.html", {
-        "cons" : conference.objects.all()
+        "cons" : conference.objects.all(),
+        "email" : email_i
     })
 
     

@@ -1,11 +1,17 @@
 {% extends "home/layout.html" %}
 
 {% block body %}
-    <h1>Current Running Conference</h1>
-    <ul>
-        {% for con in cons %}
 
-            <li>{{ con.con_name }}  {{ con.host_organisation }}</li>
-        {% endfor %}
-    </ul>
+    {% if email != "NULL" %}
+        <a href="">click here to upload paper</a>
+    {% else %}
+        <h1>List of all running Conferences</h1>
+        <ul>
+            {% for con in cons %}
+
+                <li><a href="{% url 'home:conference_page' email %}">{{ con.con_name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
 {% endblock %}
