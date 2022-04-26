@@ -6,5 +6,17 @@
         <li>Name : {{ name }}</li>
         <li>Organisation: {{ organisation }}</li>
         <li>Email: {{ email }}</li>
+        <li>Account Type: {{ account_type }}</li>
     </ul>
+
+    {% if account_type == "organisation" %}
+        <h3>Fill this form to make conference</h3>
+        <form action="{% url 'home:conference_page' email %}" method = "post">
+            {% csrf_token %}
+            {{ con_form }}
+            <input type="submit">
+        </form>
+    {% else %}
+        <h3>click the below link to participate in the conference</h3>
+    {% endif %}
 {% endblock %}

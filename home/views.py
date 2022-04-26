@@ -4,17 +4,26 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 
-from .models import Users
+from .models import Users, conference
 
 class signupForm(forms.Form):
     name = forms.CharField(label = "name")
     email = forms.CharField(label = "email")
     organisation = forms.CharField(label = "organisation")
     password = forms.CharField(label = "password")
+    account_type = forms.CharField(label = "account_type")
 
 class loginForm(forms.Form):
     email = forms.CharField(label = "email")
-    password = forms.CharField(label = "passoword")
+    password = forms.CharField(label = "password")
+
+
+class conferenceForm(forms.Form):
+    conference_name = forms.CharField(label = "conference_name")
+    host_name = forms.CharField(label = "host_name")
+    start_date = forms.CharField(label = "start_date")
+    end_date = forms.CharField(label = "end_date")
+
 
 # Create your views here.
 def index(request):
@@ -59,8 +68,9 @@ def signup_page(request):
             email_i = form.cleaned_data["email"]
             organisation_i = form.cleaned_data["organisation"]
             password_i = form.cleaned_data["password"]
+            account_type_i = form.cleaned_data["account_type"]
 
-            Users.objects.create(name = name_i, email = email_i, organisation = organisation_i, password = password_i)
+            Users.objects.create(name = name_i, email = email_i, organisation = organisation_i, password = password_i, account_type = account_type_i)
 
             return HttpResponseRedirect(reverse("home:login_page"))
 
@@ -68,6 +78,8 @@ def signup_page(request):
             return render(request, "home/signup.html", {
                 "form" : signupForm()
             })
+
+    
 
 
 
@@ -78,9 +90,32 @@ def signup_page(request):
 
 def profile_page(request, email):
     email_i = str(email)
+
     return render(request, "home/profile.html", {
         "name": Users.objects.filter(email = email_i).first().name,
         "email" : email_i,
-        "organisation" : Users.objects.filter(email = email_i).first().organisation
+        "organisation" : Users.objects.filter(email = email_i).first().organisation,
+        "account_type" : Users.objects.filter(email = email_i).first().account_type,
+        "con_form" : conferenceForm()
     })
 
+def conference_page(request, email):
+    email_i = str(email)
+
+    if request.method == "POST":
+        form = conferenceForm(request.POST)
+
+        if form.is_valid():
+            conference_name_i = form.cleaned_data["conference_name"]
+            host_name_i = form.cleaned_data["host_name"]
+            start_date_i = form.cleaned_data["start_date"]
+            end_date_i = form.cleaned_data["end_date"]
+
+            conference.objects.create(con_name = conference_name_i, host_organisation = host_name_i, start_date = start_date_i, end_date = end_date_i)
+    
+    
+    return render(request, "home/conference.html", {
+        "cons" : conference.objects.all()
+    })
+
+    
