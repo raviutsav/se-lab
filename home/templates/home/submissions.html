@@ -1,0 +1,14 @@
+{% extends "home/layout.html" %}
+
+{% block body %}
+    <h1>List of all submissions made</h1>
+    <ul>
+        {% for sub in subs %}
+
+            <li>{{ sub.submitter_email }} {{ sub.conference_name }} {{ sub.document.url }}</li>
+            <a href="{{ sub.document.url }}}"> {{ sub.document }}</a>
+        {% endfor %}
+    </ul>
+
+    {{ message }}
+{% endblock %}

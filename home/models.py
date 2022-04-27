@@ -20,14 +20,15 @@ class conference(models.Model):
     start_date = models.CharField(max_length=64)
     end_date = models.CharField(max_length=64)
 
-    def __self__(self):
+    def __str__(self):
         return f"{self.con_name}{self.host_organisation} {self.start_date} {self.end_date}"
 
 
-# class submissions(models.Model):
-#     submitter_name: models.CharField(max_length=64)
-#     conference_name: models.CharField(max_length=64)
-#     document: models.FileField()
+class submissions(models.Model):
+    submitter_email = models.CharField(max_length=64)
+    conference_name =  models.CharField(max_length=64)
+    document =  models.FileField()
 
-#     def __self__(self):
-#         return f"{self.submitter_name} {self.conference_name}"
+    def __str__(self):
+        return f"{self.submitter_email} {self.conference_name} {self.document}"
+ 

@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 
-from .models import Users, conference
+from .models import Users, conference, submissions
 
 class signupForm(forms.Form):
     name = forms.CharField(label = "name")
@@ -23,6 +23,12 @@ class conferenceForm(forms.Form):
     host_name = forms.CharField(label = "host_name")
     start_date = forms.CharField(label = "start_date")
     end_date = forms.CharField(label = "end_date")
+
+class submissionsForm(forms.Form):
+    submitter_name = forms.CharField(label="submitter_name")
+    conference_name = forms.CharField(label="conference_name")
+    title = forms.CharField(label="title")
+    file = forms.FileField()
 
 
 # Create your views here.
@@ -90,6 +96,18 @@ def signup_page(request):
 
 def profile_page(request, email):
     email_i = str(email)
+    message = ""
+    if request.method == 'POST':
+        form = submissionsForm(request.POST, request.FILES)
+        if form.is_valid():
+            message = "document uploaded successfuly"
+            submitter_email_i = email_i
+            conference_name_i = form.cleaned_data["conference_name"]
+            document_i = form.cleaned_data["file"]
+            print(submitter_email_i)
+            submissions.objects.create(submitter_email = submitter_email_i , conference_name = conference_name_i, document = document_i)
+        else:
+            message = "document NOT uploaded successfully"
 
     return render(request, "home/profile.html", {
         "name": Users.objects.filter(email = email_i).first().name,
@@ -97,7 +115,8 @@ def profile_page(request, email):
         "organisation" : Users.objects.filter(email = email_i).first().organisation,
         "account_type" : Users.objects.filter(email = email_i).first().account_type,
         "con_form" : conferenceForm(),
-        "cons" : conference.objects.all()
+        "cons" : conference.objects.all(),
+        "message": message
     })
 
 def conference_page(request, email):
@@ -118,7 +137,15 @@ def conference_page(request, email):
     
     return render(request, "home/conference.html", {
         "cons" : conference.objects.all(),
-        "email" : email_i
+        "email" : email_i,
+        "sub_form" : submissionsForm()
     })
 
     
+def submissions_page(request, email):
+    email_i = str(email)
+
+    return render(request, "home/submissions.html", {
+        "subs" : submissions.objects.filter(submitter_email = email_i).all()
+    })
+

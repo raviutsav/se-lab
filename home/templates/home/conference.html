@@ -3,7 +3,12 @@
 {% block body %}
 
     {% if email != "NULL" %}
-        <a href="">click here to upload paper</a>
+        <h1>Upload document</h1>
+        <form action="{% url 'home:profile_page' email %}" method = "post" enctype="multipart/form-data">   
+            {% csrf_token %}
+            {{ sub_form }}
+            <input type="submit">
+        </form>
     {% else %}
         <h1>List of all running Conferences</h1>
         <ul>

@@ -18,6 +18,9 @@
         </form>
 
     {% else %}
+        <h2>{{ message }}</h2>
+
+        <a href="{% url 'home:submissions_page' email %}">View all submissions made</a>
         <h3>click the below link to participate in the conference</h3>
 
         <h1>List of all running Conferences</h1>
