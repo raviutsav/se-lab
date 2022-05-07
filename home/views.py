@@ -3,6 +3,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
+from django.http import FileResponse
 
 from .models import Users, conference, submissions
 
@@ -138,7 +139,7 @@ def conference_page(request, email):
     return render(request, "home/conference.html", {
         "cons" : conference.objects.all(),
         "email" : email_i,
-        "sub_form" : submissionsForm()
+        "sub_form" : submissionsForm(),
     })
 
     
@@ -148,4 +149,10 @@ def submissions_page(request, email):
     return render(request, "home/submissions.html", {
         "subs" : submissions.objects.filter(submitter_email = email_i).all()
     })
+
+def viewsub(response, filess):
+    pathss = str(filess)
+    docfile = open(pathss, 'rb')
+    response = FileResponse(docfile)
+    return response
 

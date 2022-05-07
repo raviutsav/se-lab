@@ -6,7 +6,7 @@
         {% for sub in subs %}
 
             <li>{{ sub.submitter_email }} {{ sub.conference_name }} {{ sub.document.url }}</li>
-            <a href="{{ sub.document.url }}}"> {{ sub.document }}</a>
+            <a href="{% url 'home:viewsub' sub.document %}"> {{ sub.document }}</a>
         {% endfor %}
     </ul>
 
