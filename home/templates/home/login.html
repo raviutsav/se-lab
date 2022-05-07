@@ -1,12 +1,15 @@
 {% extends "home/layout.html" %}
 
 {% block body %}
-    <h1>LOGIN</h1><br>
+    <h1>LOGIN PAGE</h1><br>
     <form action="{% url 'home:login_page' %}" method = "post">
         {% csrf_token %}
         {{ form }}
+        <br>
         <input type="submit">
     </form>
 
     {{ message }}
+    <br>
+    <a href="{% url 'home:index' %}">Home Page</a>
 {% endblock %}

@@ -2,7 +2,9 @@
 
 {% block body %}
     <h1>List of all submissions made</h1>
+        
     <div class="table-wrapper">
+
         <table class="fl-table">
             <thead>
                 <tr>
@@ -20,11 +22,11 @@
                 </tr>
             {% endfor %}
         </table>
-
     </div>
-    
-
+        
+        
     {{ message }}
+
     <br>
     <a href="{% url 'home:index' %}">Home Page</a>
 {% endblock %}

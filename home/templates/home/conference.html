@@ -7,6 +7,7 @@
         <form action="{% url 'home:profile_page' email %}" method = "post" enctype="multipart/form-data">   
             {% csrf_token %}
             {{ sub_form }}
+            <br>
             <input type="submit">
         </form>
     {% else %}
@@ -14,9 +15,10 @@
         <ul>
             {% for con in cons %}
 
-                <li><a href="{% url 'home:conference_page' email %}">{{ con.con_name }}</a></li>
+                <li><a href="">{{ con.con_name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
-    
+    <br>
+    <a href="{% url 'home:index' %}">Home Page</a>
 {% endblock %}

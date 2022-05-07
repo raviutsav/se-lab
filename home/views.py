@@ -4,32 +4,33 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 from django.http import FileResponse
+from django.utils.safestring import mark_safe
 
 from .models import Users, conference, submissions
 
 class signupForm(forms.Form):
-    name = forms.CharField(label = "name")
-    email = forms.CharField(label = "email")
-    organisation = forms.CharField(label = "organisation")
-    password = forms.CharField(label = "password")
-    account_type = forms.CharField(label = "account_type")
+    name = forms.CharField(label =mark_safe("name"))
+    email = forms.CharField(label =mark_safe("<br />email"))
+    organisation = forms.CharField(label =mark_safe("<br />organisation"))
+    password = forms.CharField(label =mark_safe("<br />password"))
+    account_type = forms.CharField(label =mark_safe("<br />account_type"))
 
 class loginForm(forms.Form):
-    email = forms.CharField(label = "email")
-    password = forms.CharField(label = "password")
+    email = forms.CharField(label =mark_safe("email"))
+    password = forms.CharField(label =mark_safe("<br />password"))
 
 
 class conferenceForm(forms.Form):
-    conference_name = forms.CharField(label = "conference_name")
-    host_name = forms.CharField(label = "host_name")
-    start_date = forms.CharField(label = "start_date")
-    end_date = forms.CharField(label = "end_date")
+    conference_name = forms.CharField(label =mark_safe("conference_name"))
+    host_name = forms.CharField(label =mark_safe("<br />host_name"))
+    start_date = forms.CharField(label =mark_safe("<br />start_date"))
+    end_date = forms.CharField(label =mark_safe("<br />end_date"))
 
 class submissionsForm(forms.Form):
-    submitter_name = forms.CharField(label="submitter_name")
-    conference_name = forms.CharField(label="conference_name")
-    title = forms.CharField(label="title")
-    file = forms.FileField()
+    submitter_name = forms.CharField(label=mark_safe("submitter_name"))
+    conference_name = forms.CharField(label=mark_safe("<br />conference_name"))
+    title = forms.CharField(label=mark_safe("<br />title"))
+    file = forms.FileField(label=mark_safe("<br/ >Upload File"))
 
 
 # Create your views here.
@@ -156,3 +157,9 @@ def viewsub(response, filess):
     response = FileResponse(docfile)
     return response
 
+def conferencesubs_page(request, con_namee):
+    con_namee = str(con_namee)
+
+    return render(request, "home/conferencesubs.html", {
+        "subs": submissions.objects.filter(conference_name = con_namee).all()
+    })

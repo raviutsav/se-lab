@@ -14,20 +14,84 @@
         <form action="{% url 'home:conference_page' email %}" method = "post">
             {% csrf_token %}
             {{ con_form }}
+            <br>
             <input type="submit">
         </form>
+
+        <h3>List of all running conference</h3>
+
+        <div class="table-wrapper">
+
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Conference Name</th>
+                        <th>Organising Host</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                
+                {% for con in cons %}
+                <tr>
+                    <td>{{ con.con_name }}</td>
+                    <td>{{ con.host_organisation }}</td>
+                    <td>{{ con.start_date }}</td>
+                    <td>{{ con.end_date }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+
+
+        <br>
+        <h3>Click on the organisation to view the submissions</h3>
+
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Conference Name</th>
+                        <th>Organising Host</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                {% for con in cons %}
+    
+                    {% if con.host_organisation == name %}
+    
+                        <tr>
+                            <td><a href="{% url 'home:conferencesubs_page' con.con_name %}">{{ con.con_name }}</a></td>
+                            <td>{{ con.host_organisation }}</td>
+                            <td>{{ con.start_date }}</td>
+                            <td>{{ con.end_date }}</td>
+                        </tr>
+                        
+                    {% else %}
+    
+                    {% endif %}
+    
+                {% endfor %}
+            </table>
+
+        </div>
+        
 
     {% else %}
         <h2>{{ message }}</h2>
 
-        <a href="{% url 'home:submissions_page' email %}">View all submissions made</a>
-        <h3>click the below link to participate in the conference</h3>
+        <h3>Click <a href="{% url 'home:submissions_page' email %}">here</a> to view all the submissions made. </h3>
 
-        <h1>List of all running Conferences</h1>
+        <h3>List of all running Conferences (click on the organisation to participate)</h3>
         <ul>
             {% for con in cons %}
                 <li><a href="{% url 'home:conference_page' email %}">{{ con.con_name }}</a></li>
             {% endfor %}
         </ul>
     {% endif %}
+
+    <br>
+    <a href="{% url 'home:index' %}">Home Page</a>
 {% endblock %}
