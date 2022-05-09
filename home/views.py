@@ -9,27 +9,27 @@ from django.utils.safestring import mark_safe
 from .models import Users, conference, submissions
 
 class signupForm(forms.Form):
-    name = forms.CharField(label =mark_safe("name"))
-    email = forms.CharField(label =mark_safe("<br />email"))
-    organisation = forms.CharField(label =mark_safe("<br />organisation"))
-    password = forms.CharField(label =mark_safe("<br />password"))
-    account_type = forms.CharField(label =mark_safe("<br />account_type"))
+    name = forms.CharField(label =mark_safe("Name"))
+    email = forms.CharField(label =mark_safe("<br />Email"))
+    organisation = forms.CharField(label =mark_safe("<br />Organisation"))
+    password = forms.CharField(label =mark_safe("<br />Password"))
+    account_type = forms.CharField(label =mark_safe("<br />Account_type"))
 
 class loginForm(forms.Form):
-    email = forms.CharField(label =mark_safe("email"))
-    password = forms.CharField(label =mark_safe("<br />password"))
+    email = forms.CharField(label =mark_safe("Email"))
+    password = forms.CharField(label =mark_safe("<br />Password"))
 
 
 class conferenceForm(forms.Form):
-    conference_name = forms.CharField(label =mark_safe("conference_name"))
-    host_name = forms.CharField(label =mark_safe("<br />host_name"))
-    start_date = forms.CharField(label =mark_safe("<br />start_date"))
-    end_date = forms.CharField(label =mark_safe("<br />end_date"))
+    conference_name = forms.CharField(label =mark_safe("Conference_name"))
+    host_name = forms.CharField(label =mark_safe("<br />Host_name"))
+    start_date = forms.CharField(label =mark_safe("<br />Start_date"))
+    end_date = forms.CharField(label =mark_safe("<br />End_date"))
 
 class submissionsForm(forms.Form):
-    submitter_name = forms.CharField(label=mark_safe("submitter_name"))
-    conference_name = forms.CharField(label=mark_safe("<br />conference_name"))
-    title = forms.CharField(label=mark_safe("<br />title"))
+    submitter_name = forms.CharField(label=mark_safe("Submitter_name"))
+    conference_name = forms.CharField(label=mark_safe("<br />Conference_name"))
+    title = forms.CharField(label=mark_safe("<br />Title"))
     file = forms.FileField(label=mark_safe("<br/ >Upload File"))
 
 
