@@ -1,0 +1,24 @@
+{% extends "home/layout.html" %}
+
+{% block body %}
+
+    {% if email != "NULL" %}
+        <h1>Upload document</h1>
+        <form action="{% url 'home:profile_page' email %}" method = "post" enctype="multipart/form-data">   
+            {% csrf_token %}
+            {{ sub_form }}
+            <br>
+            <input type="submit">
+        </form>
+    {% else %}
+        <h1>List of all running Conferences</h1>
+        <ul>
+            {% for con in cons %}
+
+                <li><a href="">{{ con.con_name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <br>
+    <a href="{% url 'home:index' %}">Home Page</a>
+{% endblock %}
